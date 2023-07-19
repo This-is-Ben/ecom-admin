@@ -13,15 +13,15 @@ import {
     DropdownMenuSeparator, 
     DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { BillboardColumn } from "./columns";
+import { CategoryColumn } from "./columns";
 import { AlertModal } from "@/components/modals/alert-modal";
 
 interface RowActionProps {
-    billboard: BillboardColumn
+    category: CategoryColumn
 };
 
 export const RowAction: React.FC<RowActionProps> = ({
-    billboard
+    category
 }) => {
     const router = useRouter();
     const params = useParams();
@@ -30,21 +30,21 @@ export const RowAction: React.FC<RowActionProps> = ({
     const [open, setOpen] = useState(false);
 
     const onCopy = () => {
-        navigator.clipboard.writeText(billboard.id);
-        toast.success("Biillboard Id copied to clipboard");
+        navigator.clipboard.writeText(category.id);
+        toast.success("Category Id copied to clipboard");
     }
 
     const onDelete = async () => {
         try {
             setLoading(true);
 
-			await axios.delete(`/api/${params.storeId}/billboards/${billboard.id}`);
+			await axios.delete(`/api/${params.storeId}/categories/${category.id}`);
             router.refresh();
-            router.push(`/${params.storeId}/billboards/`);
-            toast.success(`${billboard?.label} has been deleted!`);
+            router.push(`/${params.storeId}/categories/`);
+            toast.success(`${category?.name} has been deleted!`);
             
         } catch (error) {
-            toast.error("Delete all categories using this billboard first.")
+            toast.error("Delete all products using this category first.")
         } finally {
             setLoading(false);
             setOpen(false);
@@ -58,7 +58,7 @@ export const RowAction: React.FC<RowActionProps> = ({
                 onClose={() => setOpen(false)}
                 onConfirm={onDelete}
                 loading={loading}
-                description="This will delete the Billboard."
+                description="This will delete the Category."
             />
             <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -72,19 +72,19 @@ export const RowAction: React.FC<RowActionProps> = ({
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={onCopy}>
                     <Copy className="mr-2 h-4 w-4"/>
-                    Copy billboard ID
+                    Copy category ID
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                onClick={() => router.push(`/${params.storeId}/billboards/${billboard.id}`)}
+                onClick={() => router.push(`/${params.storeId}/categories/${category.id}`)}
                 >
                     <Edit className="mr-2 h-4 w-4"/>
-                    Edit billboard
+                    Edit category
                 </DropdownMenuItem>
                 <DropdownMenuItem
                 onClick={() => setOpen(true)}
                 >
                     <Trash className="mr-2 h-4 w-4"/>
-                    Delete billboard
+                    Delete category
                 </DropdownMenuItem>
             </DropdownMenuContent>
             </DropdownMenu>

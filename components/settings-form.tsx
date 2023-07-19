@@ -84,6 +84,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             onClose={() => setOpen(false)}
             onConfirm={onDelete}
             loading={loading}
+            description="This will delete the Store."
         />
 
         <div className="flex items-center justify-between">

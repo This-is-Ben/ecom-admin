@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
+import { describe } from "node:test";
 
 interface AlertModalProps {
     isOpen: boolean;
     onClose: () => void;
     onConfirm: () => void;
     loading: boolean;
+    description: string,
 }
 
 export const AlertModal: React.FC<AlertModalProps> = ({
@@ -17,6 +19,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
     onClose,
     onConfirm,
     loading,
+    description
 }) => {
 
     const [isMounted, setIsMounted] = useState(false);
@@ -32,7 +35,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
     return (
         <Modal
             title="Are you sure?"
-            description="This action will delete the current store."
+            description={description}
             isOpen={isOpen}
             onClose={onClose}
         >
